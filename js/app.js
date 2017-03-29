@@ -23,20 +23,12 @@ import React from 'react';
 // ReactDom.render((
 //     <ShoppingList name="Mark" />
 // ), document.getElementById('root'));
-class Square extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            value: null,
-        };
-    }
-    render() {
-        return (
-            <button className="square" onClick={() => this.props.onClick()}>
-                {this.props.value}
-            </button>
-        );
-    }
+function Square(props) {
+    return (
+        <button className="square" onClick={() => props.onClick()}>
+            {props.value}
+        </button>
+    );
 }
 
 Square.propTypes = {
@@ -49,18 +41,22 @@ class Board extends React.Component {
         super();
         this.state = {
             squares: Array(9).fill(null),
+            xIsNext: true,
         };
     }
     handleClick(i) {
         const squares = this.state.squares.slice();
-        squares[i] = 'X';
-        this.setState({ squares: squares });
+        squares[i] = this.state.xIsNext ? 'X' : 'O';
+        this.setState({
+            squares: squares,
+            xIsNext: !this.state.xIsNext,
+        });
     }
     renderSquare(i) {
         return <Square value={this.state.squares[i]} onClick={() => this.handleClick(i)} />;
     }
     render() {
-        const status = 'Next player: X';
+        const status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
         return (
             <div>
                 <div className="status">{status}</div>
