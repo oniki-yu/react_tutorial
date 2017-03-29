@@ -23,11 +23,6 @@ import React from 'react';
 // ReactDom.render((
 //     <ShoppingList name="Mark" />
 // ), document.getElementById('root'));
-
-
-
-
-
 class Square extends React.Component {
     constructor() {
         super();
@@ -44,6 +39,11 @@ class Square extends React.Component {
     }
 }
 
+Square.propTypes = {
+    onClick: React.PropTypes.func.isRequired, // string型で必須
+    value: React.PropTypes.string.isRequired, // string型で必須
+};
+
 class Board extends React.Component {
     constructor() {
         super();
@@ -54,7 +54,7 @@ class Board extends React.Component {
     handleClick(i) {
         const squares = this.state.squares.slice();
         squares[i] = 'X';
-        this.setState({squares: squares});
+        this.setState({ squares: squares });
     }
     renderSquare(i) {
         return <Square value={this.state.squares[i]} onClick={() => this.handleClick(i)} />;
